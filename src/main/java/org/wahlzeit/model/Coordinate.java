@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import java.util.Objects;
+
 public class Coordinate {
     private double x;
     private double y;
@@ -26,6 +28,17 @@ public class Coordinate {
      * @return True, if they are the same, false, on the other hand.
      */
     public boolean isEqual(Coordinate coordinate) {
-        return coordinate.x == this.x && coordinate.y == this.y && coordinate.z == this.z;
+        if (this == coordinate) return true;
+        return Double.compare(coordinate.x, x) == 0 &&
+                Double.compare(coordinate.y, y) == 0 &&
+                Double.compare(coordinate.z, z) == 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordinate coordinate = (Coordinate) o;
+        return this.isEqual(coordinate);
     }
 }
