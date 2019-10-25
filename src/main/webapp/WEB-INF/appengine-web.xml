@@ -13,7 +13,7 @@
     </system-properties>
 
     <static-files>
-        <include path="/**.ico" />
-        <include path="/config/**" />
+        <include path="/**.ico"/>
+        <include path="/config/**"/>
     </static-files>
 </appengine-web-app>
