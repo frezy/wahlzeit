@@ -53,6 +53,7 @@ public class Coordinate {
      */
     public boolean isEqual(Coordinate coordinate) {
         if (this == coordinate) return true;
+        if (coordinate == null) return false;
 
         return compareDouble(coordinate.x, x) &&
                 compareDouble(coordinate.y, y) &&
@@ -70,7 +71,7 @@ public class Coordinate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        
+
         Coordinate coordinate = (Coordinate) o;
         return this.isEqual(coordinate);
     }
