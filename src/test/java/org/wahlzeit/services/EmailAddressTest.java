@@ -27,11 +27,15 @@ import junit.framework.TestCase;
  */
 public class EmailAddressTest extends TestCase {
 
+	private EmailAddress emailAddress;
+
 	/**
 	 *
 	 */
 	public EmailAddressTest(String name) {
 		super(name);
+
+		emailAddress = EmailAddress.getFromString("test@test.local");
 	}
 
 	/**
@@ -57,6 +61,20 @@ public class EmailAddressTest extends TestCase {
 			// creation failed
 			return false;
 		}
+	}
+
+	/**
+	 *
+	 */
+	public void testAsString() {
+		assertEquals("test@test.local", emailAddress);
+	}
+
+	/**
+	 *
+	 */
+	public void testAsInternetAddress() {
+		assertNotNull(emailAddress.asInternetAddress());
 	}
 
 	/**
