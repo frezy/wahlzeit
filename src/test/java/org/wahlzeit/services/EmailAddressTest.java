@@ -67,7 +67,7 @@ public class EmailAddressTest extends TestCase {
 	 *
 	 */
 	public void testAsString() {
-		assertEquals("test@test.local", emailAddress);
+		assertEquals("test@test.local", emailAddress.asString());
 	}
 
 	/**
