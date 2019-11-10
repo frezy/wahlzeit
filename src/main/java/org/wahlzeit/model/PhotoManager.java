@@ -72,28 +72,28 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 *
 	 */
-	public static final PhotoManager getInstance() {
+	public static PhotoManager getInstance() {
 		return instance;
 	}
 
 	/**
 	 *
 	 */
-	public final boolean hasPhoto(String id) {
+	public boolean hasPhoto(String id) {
 		return hasPhoto(PhotoId.getIdFromString(id));
 	}
 
 	/**
 	 *
 	 */
-	public final boolean hasPhoto(PhotoId id) {
+	public boolean hasPhoto(PhotoId id) {
 		return getPhoto(id) != null;
 	}
 
 	/**
 	 *
 	 */
-	public final Photo getPhoto(PhotoId id) {
+	public Photo getPhoto(PhotoId id) {
 		return instance.getPhotoFromId(id);
 	}
 
@@ -307,14 +307,14 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 * @methodtype get
 	 */
-	public Map<PhotoId, Photo> getPhotoCache() {
+	public Map<PhotoId, ? extends Photo> getPhotoCache() {
 		return photoCache;
 	}
 
 	/**
 	 *
 	 */
-	public Set<Photo> findPhotosByOwner(String ownerName) {
+	public Set<? extends Photo> findPhotosByOwner(String ownerName) {
 		Set<Photo> result = new HashSet<Photo>();
 		readObjects(result, Photo.class, Photo.OWNER_ID, ownerName);
 
@@ -362,5 +362,4 @@ public class PhotoManager extends ObjectManager {
 			throw new IllegalStateException("Photo already exists!");
 		}
 	}
-
 }

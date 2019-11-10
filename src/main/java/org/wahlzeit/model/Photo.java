@@ -146,7 +146,6 @@ public class Photo extends DataObject {
 	 */
 	public Photo(PhotoId myId) {
 		id = myId;
-
 		incWriteCount();
 	}
 

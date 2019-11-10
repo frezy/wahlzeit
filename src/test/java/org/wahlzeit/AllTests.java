@@ -17,6 +17,9 @@ import org.junit.runners.Suite;
         org.wahlzeit.model.UserStatusTest.class,
         org.wahlzeit.model.ValueTest.class,
 
+        org.wahlzeit.model.PhotoTestSuite.class,
+        org.wahlzeit.model.FoodPhotoTestSuite.class,
+
         org.wahlzeit.services.EmailTestSuite.class,
         org.wahlzeit.services.LogBuilderTest.class,
 

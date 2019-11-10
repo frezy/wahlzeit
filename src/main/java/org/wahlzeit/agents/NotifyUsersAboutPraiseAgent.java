@@ -1,13 +1,7 @@
 package org.wahlzeit.agents;
 
 import com.google.apphosting.api.ApiProxy;
-import org.wahlzeit.model.LanguageConfigs;
-import org.wahlzeit.model.ModelConfig;
-import org.wahlzeit.model.Photo;
-import org.wahlzeit.model.PhotoId;
-import org.wahlzeit.model.PhotoManager;
-import org.wahlzeit.model.User;
-import org.wahlzeit.model.UserManager;
+import org.wahlzeit.model.*;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.mailing.EmailService;
@@ -38,14 +32,14 @@ public class NotifyUsersAboutPraiseAgent extends Agent {
 	 * Notifies all users that want to get informed if their photos have been praised.
 	 */
 	protected void doRun() {
-		Map<PhotoId, Photo> photoCache = PhotoManager.getInstance().getPhotoCache();
-		Collection<Photo> photos = photoCache.values();
+		Map<PhotoId, FoodPhoto> photoCache = FoodPhotoManager.getInstance().getPhotoCache();
+		Collection<FoodPhoto> foodPhotos = (Collection<FoodPhoto>)photoCache.values();
 
 		ArrayList<Photo> arrayListOfPhotos;
 		HashMap<String, ArrayList<Photo>> ownerIdPhotosMap = new HashMap<String, ArrayList<Photo>>();
-		for (Photo photo : photos) {
-			if (photo != null && photo.isVisible() && photo.hasNewPraise()) {
-				String ownerId = photo.getOwnerId();
+		for (FoodPhoto foodPhoto : foodPhotos) {
+			if (foodPhoto != null && foodPhoto.isVisible() && foodPhoto.hasNewPraise()) {
+				String ownerId = foodPhoto.getOwnerId();
 				if (ownerId != null) {
 					log.config(LogBuilder.createSystemMessage().addParameter("ownerId", ownerId).toString());
 					if (ownerIdPhotosMap.containsKey(ownerId)) {
@@ -55,10 +49,10 @@ public class NotifyUsersAboutPraiseAgent extends Agent {
 						log.config(LogBuilder.createSystemMessage().addAction("add to new owner").toString());
 						arrayListOfPhotos = new ArrayList<Photo>();
 					}
-					arrayListOfPhotos.add(photo);
+					arrayListOfPhotos.add(foodPhoto);
 					ownerIdPhotosMap.put(ownerId, arrayListOfPhotos);
-					photo.setNoNewPraise();
-					PhotoManager.getInstance().savePhoto(photo);
+					foodPhoto.setNoNewPraise();
+					FoodPhotoManager.getInstance().savePhoto(foodPhoto);
 				}
 			}
 		}
