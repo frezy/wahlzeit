@@ -3,16 +3,18 @@ package org.wahlzeit.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 public class SphericCoordinateTest {
 
-    SphericCoordinate a;
-    SphericCoordinate b;
-    SphericCoordinate c;
+    private SphericCoordinate a;
+    private SphericCoordinate b;
+    private SphericCoordinate c;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         a = new SphericCoordinate(1.1071487177940904, 0.6405223126794247, 0.37416573867739417);
         b = new SphericCoordinate(1.1071487177940904, 0.6405223126794247, 0.37416573867739417);
         c = new SphericCoordinate(1.1071487177940904, 0.8410686705679303, 0.30000000000000004);
@@ -59,5 +61,11 @@ public class SphericCoordinateTest {
     public void isEqual() {
         assertTrue(a.equals(b));
         assertFalse(a.equals(c));
+    }
+
+
+    @Test
+    public void testHashCode() {
+        assertEquals(Objects.hash(a.getPhi(), a.getThata(), a.getRadius()), a.hashCode());
     }
 }

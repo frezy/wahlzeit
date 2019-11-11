@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.wahlzeit.utils.DoubleUtil;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 
@@ -13,7 +15,7 @@ public class CartesianCoordinateTest {
     private CartesianCoordinate c;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         a = new CartesianCoordinate(0.1, 0.2, 0.3);
         b = new CartesianCoordinate(0.1, 0.2, 0.3);
         c = new CartesianCoordinate(0.1, 0.2, 0.2);
@@ -65,5 +67,10 @@ public class CartesianCoordinateTest {
     public void testEquals() {
         assertTrue(a.equals(b));
         assertFalse(a.equals(c));
+    }
+
+    @Test
+    public void testHashCode() {
+        assertEquals(Objects.hash(a.getX(), a.getY(), a.getZ()), a.hashCode());
     }
 }
