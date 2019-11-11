@@ -6,18 +6,18 @@ import java.util.Objects;
  * A location for a Photo-object.
  */
 public class Location {
-    public Coordinate coordinate;
+    public CartesianCoordinate cartesianCoordinate;
 
-    public Location(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public Location(CartesianCoordinate cartesianCoordinate) {
+        this.cartesianCoordinate = cartesianCoordinate;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public CartesianCoordinate getCartesianCoordinate() {
+        return cartesianCoordinate;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCartesianCoordinate(CartesianCoordinate cartesianCoordinate) {
+        this.cartesianCoordinate = cartesianCoordinate;
     }
 
     @Override
@@ -26,11 +26,11 @@ public class Location {
         if (o == null || getClass() != o.getClass()) return false;
 
         Location location = (Location) o;
-        return coordinate.equals(location.coordinate);
+        return cartesianCoordinate.equals(location.cartesianCoordinate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinate);
+        return Objects.hash(cartesianCoordinate);
     }
 }
