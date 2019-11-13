@@ -34,4 +34,6 @@ public interface Coordinate {
      * @return True, if they are the same, false, on the other hand.
      */
     boolean isEqual(Coordinate coordinate);
+
+    void assertNotNaN();
 }

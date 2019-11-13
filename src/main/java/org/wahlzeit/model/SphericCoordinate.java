@@ -1,21 +1,17 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.utils.DoubleUtil;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Objects;
 
 public class SphericCoordinate implements Coordinate {
     private double phi;
-    private double thata;
+    private double theta;
     private double radius;
 
-    private SphericCoordinate() {
-    }
-
-    public SphericCoordinate(double phi, double thata, double radius) {
+    public SphericCoordinate(double phi, double theta, double radius) {
         this.phi = phi;
-        this.thata = thata;
+        this.theta = theta;
         this.radius = radius;
     }
 
@@ -27,12 +23,12 @@ public class SphericCoordinate implements Coordinate {
         this.phi = phi;
     }
 
-    public double getThata() {
-        return thata;
+    public double getTheta() {
+        return theta;
     }
 
-    public void setThata(double thata) {
-        this.thata = thata;
+    public void setTheta(double theta) {
+        this.theta = theta;
     }
 
     public double getRadius() {
@@ -49,9 +45,9 @@ public class SphericCoordinate implements Coordinate {
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
-        double x = radius * Math.sin(thata) * Math.cos(phi);
-        double y = radius * Math.sin(thata) * Math.sin(phi);
-        double z = radius * Math.cos(thata);
+        double x = radius * Math.sin(theta) * Math.cos(phi);
+        double y = radius * Math.sin(theta) * Math.sin(phi);
+        double z = radius * Math.cos(theta);
 
         return new CartesianCoordinate(x, y, z);
     }
@@ -63,7 +59,7 @@ public class SphericCoordinate implements Coordinate {
      */
     @Override
     public double getCartesianDistance(Coordinate coordinate) {
-        return this.asCartesianCoordinate().getCartesianDistance(coordinate);
+        return asCartesianCoordinate().getCartesianDistance(coordinate);
     }
 
     /**
@@ -82,7 +78,11 @@ public class SphericCoordinate implements Coordinate {
      */
     @Override
     public double getCentralAngle(Coordinate coordinate) {
-        throw new NotImplementedException(); //TODO
+        return doGetCentralAngle(coordinate.asSphericCoordinate());
+    }
+
+    private double doGetCentralAngle(SphericCoordinate sphericCoordinate) {
+        return Math.acos(Math.sin(this.phi) * Math.sin(sphericCoordinate.phi) + Math.cos(this.phi) * Math.cos(sphericCoordinate.phi) * Math.cos(Math.abs(this.radius - sphericCoordinate.radius))); //TODO check physics vs math https://en.wikipedia.org/wiki/Spherical_coordinate_system
     }
 
     /**
@@ -93,14 +93,21 @@ public class SphericCoordinate implements Coordinate {
     @Override
     public boolean isEqual(Coordinate coordinate) {
         if(coordinate == null) return false;
+        assertNotNaN();
+        coordinate.assertNotNaN();
 
         return doIsEqual(coordinate.asSphericCoordinate());
     }
 
     private boolean doIsEqual(SphericCoordinate sphericCoordinate) {
         return DoubleUtil.compare(sphericCoordinate.radius, radius) &&
-                DoubleUtil.compare(sphericCoordinate.thata, thata) &&
+                DoubleUtil.compare(sphericCoordinate.theta, theta) &&
                 DoubleUtil.compare(sphericCoordinate.phi, phi);
+    }
+
+    @Override
+    public void assertNotNaN() {
+        if(Double.isNaN(phi) || Double.isNaN(theta) || Double.isNaN(radius)) throw new IllegalStateException("Coordinate is NaN");
     }
 
     @Override
@@ -115,6 +122,6 @@ public class SphericCoordinate implements Coordinate {
 
     @Override
     public int hashCode() {
-        return Objects.hash(phi, thata, radius);
+        return Objects.hash(phi, theta, radius);
     }
 }

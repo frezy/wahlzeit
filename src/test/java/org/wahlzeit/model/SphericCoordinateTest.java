@@ -2,6 +2,7 @@ package org.wahlzeit.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.utils.DoubleUtil;
 
 import java.util.Objects;
 
@@ -9,9 +10,7 @@ import static org.junit.Assert.*;
 
 public class SphericCoordinateTest {
 
-    private SphericCoordinate a;
-    private SphericCoordinate b;
-    private SphericCoordinate c;
+    private SphericCoordinate a, b, c;
 
     @Before
     public void setUp() {
@@ -21,14 +20,27 @@ public class SphericCoordinateTest {
     }
 
     @Test
+    public void testMemberIsNotNaN() {
+        a.assertNotNaN();
+        b.assertNotNaN();
+        c.assertNotNaN();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testMemberIsNaN() {
+        a.setRadius(Double.NaN);
+        a.assertNotNaN();
+    }
+
+    @Test
     public void testSphericCoordinateGetterSetter() {
         double x = 0.4, y = 0.5, z = 0.6;
         c.setPhi(x);
-        c.setThata(y);
+        c.setTheta(y);
         c.setRadius(z);
 
         assertEquals(x, c.getPhi(),1E-5);
-        assertEquals(y, c.getThata(),1E-5);
+        assertEquals(y, c.getTheta(),1E-5);
         assertEquals(z, c.getRadius(),1E-5);
     }
 
@@ -52,9 +64,13 @@ public class SphericCoordinateTest {
         assertEquals(a, a.asSphericCoordinate());
     }
 
+    /**
+     * https://www.wolframalpha.com/input/?i=arccos%28sin%281.1071487177940904%29*sin%281.1071487177940904%29%2Bcos%281.1071487177940904%29*cos%281.1071487177940904%29*cos%280.37416573867739417+-+0.30000000000000004%29%29
+     */
     @Test
     public void getCentralAngle() {
-        //TODO
+        assertEquals(0, a.getCentralAngle(b), 1E-5);
+        assertEquals(0.033161844920283, a.getCentralAngle(c), 1E-5);
     }
 
     @Test
@@ -66,6 +82,6 @@ public class SphericCoordinateTest {
 
     @Test
     public void testHashCode() {
-        assertEquals(Objects.hash(a.getPhi(), a.getThata(), a.getRadius()), a.hashCode());
+        assertEquals(Objects.hash(a.getPhi(), a.getTheta(), a.getRadius()), a.hashCode());
     }
 }

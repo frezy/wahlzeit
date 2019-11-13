@@ -2,7 +2,6 @@ package org.wahlzeit.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wahlzeit.utils.DoubleUtil;
 
 import java.util.Objects;
 
@@ -19,6 +18,19 @@ public class CartesianCoordinateTest {
         a = new CartesianCoordinate(0.1, 0.2, 0.3);
         b = new CartesianCoordinate(0.1, 0.2, 0.3);
         c = new CartesianCoordinate(0.1, 0.2, 0.2);
+    }
+
+    @Test
+    public void testMemberIsNotNaN() {
+        a.assertNotNaN();
+        b.assertNotNaN();
+        c.assertNotNaN();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testMemberIsNaN() {
+        a.setX(Double.NaN);
+        a.assertNotNaN();
     }
 
     @Test
@@ -55,12 +67,16 @@ public class CartesianCoordinateTest {
 
         assertEquals(0.374166, sphericCoordinate.getRadius(), 1E-5);
         assertEquals(1.10715, sphericCoordinate.getPhi(), 1E-5);
-        assertEquals(0.640522, sphericCoordinate.getThata(), 1E-5);
+        assertEquals(0.640522, sphericCoordinate.getTheta(), 1E-5);
     }
 
+    /**
+     * https://www.wolframalpha.com/input/?i=arccos%28sin%281.1071487177940904%29*sin%281.1071487177940904%29%2Bcos%281.1071487177940904%29*cos%281.1071487177940904%29*cos%280.37416573867739417+-+0.30000000000000004%29%29
+     */
     @Test
-    public void testGetCentralAngle() {
-        //TODO
+    public void getCentralAngle() {
+        assertEquals(0, a.getCentralAngle(b), 1E-5);
+        assertEquals(0.033161844920283, a.getCentralAngle(c), 1E-5);
     }
 
     @Test
