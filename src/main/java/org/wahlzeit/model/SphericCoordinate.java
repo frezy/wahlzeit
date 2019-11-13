@@ -9,6 +9,8 @@ public class SphericCoordinate implements Coordinate {
     private double theta;
     private double radius;
 
+    private SphericCoordinate() {};
+
     public SphericCoordinate(double phi, double theta, double radius) {
         this.phi = phi;
         this.theta = theta;
@@ -19,24 +21,12 @@ public class SphericCoordinate implements Coordinate {
         return phi;
     }
 
-    public void setPhi(double phi) {
-        this.phi = phi;
-    }
-
     public double getTheta() {
         return theta;
     }
 
-    public void setTheta(double theta) {
-        this.theta = theta;
-    }
-
     public double getRadius() {
         return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 
     /**
@@ -93,21 +83,16 @@ public class SphericCoordinate implements Coordinate {
     @Override
     public boolean isEqual(Coordinate coordinate) {
         if(coordinate == null) return false;
-        assertNotNaN();
-        coordinate.assertNotNaN();
 
-        return doIsEqual(coordinate.asSphericCoordinate());
+        return doIsEqual(coordinate);
     }
 
-    private boolean doIsEqual(SphericCoordinate sphericCoordinate) {
+    protected boolean doIsEqual(Coordinate coordinate) {
+        SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
+
         return DoubleUtil.compare(sphericCoordinate.radius, radius) &&
                 DoubleUtil.compare(sphericCoordinate.theta, theta) &&
                 DoubleUtil.compare(sphericCoordinate.phi, phi);
-    }
-
-    @Override
-    public void assertNotNaN() {
-        if(Double.isNaN(phi) || Double.isNaN(theta) || Double.isNaN(radius)) throw new IllegalStateException("Coordinate is NaN");
     }
 
     @Override

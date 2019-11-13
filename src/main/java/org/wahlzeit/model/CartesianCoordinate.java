@@ -10,6 +10,8 @@ public class CartesianCoordinate implements Coordinate {
     private double y;
     private double z;
 
+    private CartesianCoordinate() {};
+
     public CartesianCoordinate(double x, double y, double z) {
         this.x = x;
         this.y = y;
@@ -20,24 +22,12 @@ public class CartesianCoordinate implements Coordinate {
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
     }
 
-    public void setY(double y) {
-        this.y = y;
-    }
-
     public double getZ() {
         return z;
-    }
-
-    public void setZ(double z) {
-        this.z = z;
     }
 
     /**
@@ -56,8 +46,6 @@ public class CartesianCoordinate implements Coordinate {
      */
     @Override
     public double getCartesianDistance(Coordinate coordinate) {
-        assertNotNaN();
-
         return doGetCartesianDistance(coordinate.asCartesianCoordinate());
     }
 
@@ -71,8 +59,6 @@ public class CartesianCoordinate implements Coordinate {
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
-        assertNotNaN();
-
         double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
         double p = Math.atan(y / x);
         double t = Math.acos(z / r);
@@ -87,8 +73,6 @@ public class CartesianCoordinate implements Coordinate {
      */
     @Override
     public double getCentralAngle(Coordinate coordinate) {
-        assertNotNaN();
-
         return asSphericCoordinate().getCentralAngle(coordinate);
     }
 
@@ -100,31 +84,26 @@ public class CartesianCoordinate implements Coordinate {
     @Override
     public boolean isEqual(Coordinate coordinate) {
         if(coordinate == null) return false;
-        assertNotNaN();
-        coordinate.assertNotNaN();
 
-        return doIsEqual(coordinate.asCartesianCoordinate());
+        return doIsEqual(coordinate);
     }
 
-    private boolean doIsEqual(CartesianCoordinate cartesianCoordinate) {
+    protected boolean doIsEqual(Coordinate coordinate) {
+        CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
+
         return DoubleUtil.compare(cartesianCoordinate.x, x) &&
                 DoubleUtil.compare(cartesianCoordinate.y, y) &&
                 DoubleUtil.compare(cartesianCoordinate.z, z);
     }
 
     @Override
-    public void assertNotNaN() {
-        if(Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z)) throw new IllegalStateException("Coordinate is NaN");
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CartesianCoordinate)) return false;
 
-        CartesianCoordinate cartesianCoordinate = (CartesianCoordinate) o;
+        CartesianCoordinate that = (CartesianCoordinate) o;
 
-        return isEqual(cartesianCoordinate);
+        return isEqual(that);
     }
 
     @Override

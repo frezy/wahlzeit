@@ -20,31 +20,6 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void testMemberIsNotNaN() {
-        a.assertNotNaN();
-        b.assertNotNaN();
-        c.assertNotNaN();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testMemberIsNaN() {
-        a.setRadius(Double.NaN);
-        a.assertNotNaN();
-    }
-
-    @Test
-    public void testSphericCoordinateGetterSetter() {
-        double x = 0.4, y = 0.5, z = 0.6;
-        c.setPhi(x);
-        c.setTheta(y);
-        c.setRadius(z);
-
-        assertEquals(x, c.getPhi(),1E-5);
-        assertEquals(y, c.getTheta(),1E-5);
-        assertEquals(z, c.getRadius(),1E-5);
-    }
-
-    @Test
     public void asCartesianCoordinate() {
         CartesianCoordinate cartesianCoordinate = a.asCartesianCoordinate();
 

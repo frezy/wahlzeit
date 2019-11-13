@@ -21,31 +21,6 @@ public class CartesianCoordinateTest {
     }
 
     @Test
-    public void testMemberIsNotNaN() {
-        a.assertNotNaN();
-        b.assertNotNaN();
-        c.assertNotNaN();
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testMemberIsNaN() {
-        a.setX(Double.NaN);
-        a.assertNotNaN();
-    }
-
-    @Test
-    public void testCartesianCoordinateGetterSetter() {
-        double x = 0.4, y = 0.5, z = 0.6;
-        c.setX(x);
-        c.setY(y);
-        c.setZ(z);
-
-        assertEquals(x, c.getX(),1E-5);
-        assertEquals(y, c.getY(),1E-5);
-        assertEquals(z, c.getZ(),1E-5);
-    }
-
-    @Test
     public void testAsCartesianCoordinate() {
         assertEquals(a, a.asCartesianCoordinate());
     }
