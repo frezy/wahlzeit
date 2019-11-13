@@ -4,7 +4,7 @@ import org.wahlzeit.utils.DoubleUtil;
 
 import java.util.Objects;
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
     private double phi;
     private double theta;
     private double radius;
@@ -40,18 +40,6 @@ public class SphericCoordinate implements Coordinate {
         double z = radius * Math.cos(theta);
 
         return new CartesianCoordinate(x, y, z);
-    }
-
-    /**
-     * Calculate the cartesian distance between the acutal and another Coordinate-object.
-     * @param coordinate another Coordinate-object.
-     * @return The cartesian distance between the two Coordinate-objects.
-     */
-    @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
-
-        return asCartesianCoordinate().getCartesianDistance(coordinate);
     }
 
     /**
@@ -97,16 +85,6 @@ public class SphericCoordinate implements Coordinate {
         return DoubleUtil.compare(sphericCoordinate.radius, radius) &&
                 DoubleUtil.compare(sphericCoordinate.theta, theta) &&
                 DoubleUtil.compare(sphericCoordinate.phi, phi);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SphericCoordinate)) return false;
-
-        SphericCoordinate that = (SphericCoordinate) o;
-
-        return isEqual(that);
     }
 
     @Override

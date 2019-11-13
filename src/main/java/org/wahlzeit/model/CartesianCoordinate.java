@@ -5,7 +5,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Objects;
 
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate {
     private double x;
     private double y;
     private double z;
@@ -69,18 +69,6 @@ public class CartesianCoordinate implements Coordinate {
     }
 
     /**
-     * Calculate the centralAngle between the acutal and another Coordinate-object.
-     * @param coordinate another Coordinate-object.
-     * @return The central angle between the two Coordinate-objects.
-     */
-    @Override
-    public double getCentralAngle(Coordinate coordinate) {
-        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
-
-        return asSphericCoordinate().getCentralAngle(coordinate);
-    }
-
-    /**
      * Checks if the actual Coordinate-object and the other Coordinate-object is equal.
      * @param coordinate The other Coordinate-object.
      * @return True, if they are the same, false, on the other hand.
@@ -98,16 +86,6 @@ public class CartesianCoordinate implements Coordinate {
         return DoubleUtil.compare(cartesianCoordinate.x, x) &&
                 DoubleUtil.compare(cartesianCoordinate.y, y) &&
                 DoubleUtil.compare(cartesianCoordinate.z, z);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CartesianCoordinate)) return false;
-
-        CartesianCoordinate that = (CartesianCoordinate) o;
-
-        return isEqual(that);
     }
 
     @Override
