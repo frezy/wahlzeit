@@ -49,6 +49,8 @@ public class SphericCoordinate implements Coordinate {
      */
     @Override
     public double getCartesianDistance(Coordinate coordinate) {
+        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
+
         return asCartesianCoordinate().getCartesianDistance(coordinate);
     }
 
@@ -68,6 +70,8 @@ public class SphericCoordinate implements Coordinate {
      */
     @Override
     public double getCentralAngle(Coordinate coordinate) {
+        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
+
         return doGetCentralAngle(coordinate.asSphericCoordinate());
     }
 

@@ -20,7 +20,7 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void asCartesianCoordinate() {
+    public void testAsCartesianCoordinate() {
         CartesianCoordinate cartesianCoordinate = a.asCartesianCoordinate();
 
         assertEquals(0.1, cartesianCoordinate.getX(), 1E-5);
@@ -29,13 +29,18 @@ public class SphericCoordinateTest {
     }
 
     @Test
-    public void getCartesianDistance() {
+    public void testGetCartesianDistance() {
         assertEquals(0, a.getCartesianDistance(b),1E-5);
         assertEquals(0.1, a.getCartesianDistance(c), 1E-5);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetCartesianDistanceIllegalArgumentException() {
+        a.getCartesianDistance(null);
+    }
+
     @Test
-    public void asSphericCoordinate() {
+    public void testAsSphericCoordinate() {
         assertEquals(a, a.asSphericCoordinate());
     }
 
@@ -43,13 +48,18 @@ public class SphericCoordinateTest {
      * https://www.wolframalpha.com/input/?i=arccos%28sin%281.1071487177940904%29*sin%281.1071487177940904%29%2Bcos%281.1071487177940904%29*cos%281.1071487177940904%29*cos%280.37416573867739417+-+0.30000000000000004%29%29
      */
     @Test
-    public void getCentralAngle() {
+    public void testGetCentralAngle() {
         assertEquals(0, a.getCentralAngle(b), 1E-5);
         assertEquals(0.033161844920283, a.getCentralAngle(c), 1E-5);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetCentralAngleIllegalArgumentException() {
+        a.getCentralAngle(null);
+    }
+
     @Test
-    public void isEqual() {
+    public void testIsEqual() {
         assertTrue(a.equals(b));
         assertFalse(a.equals(c));
     }
