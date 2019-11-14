@@ -4,7 +4,7 @@ import org.wahlzeit.utils.DoubleUtil;
 
 import java.util.Objects;
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
     private double radius;
     private double theta;
     private double phi;
@@ -69,16 +69,6 @@ public class SphericCoordinate implements Coordinate {
     }
 
     /**
-     * Calculate the cartesian distance between the acutal and another Coordinate-object.
-     * @param coordinate another Coordinate-object.
-     * @return The cartesian distance between the two Coordinate-objects.
-     */
-    @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-        return asCartesianCoordinate().getCartesianDistance(coordinate);
-    }
-
-    /**
      * Converts the actual Coordinate-object to an SphericCoordinate-object.
      * @return The actual Coordinate-object as SphericCoordinate-object.
      */
@@ -101,34 +91,13 @@ public class SphericCoordinate implements Coordinate {
         return Math.acos(Math.sin(this.phi) * Math.sin(sphericCoordinate.phi) + Math.cos(this.phi) * Math.cos(sphericCoordinate.phi) * Math.cos(Math.abs(this.radius - sphericCoordinate.radius))); //TODO check physics vs math https://en.wikipedia.org/wiki/Great-circle_distance
     }
 
-    /**
-     * Checks if the actual Coordinate-object and the other Coordinate-object is equal.
-     * @param coordinate The other Coordinate-object.
-     * @return True, if they are the same, false, on the other hand.
-     */
     @Override
-    public boolean isEqual(Coordinate coordinate) {
-        if(coordinate == null) return false;
-
-        return doIsEqual(coordinate);
-    }
-
     protected boolean doIsEqual(Coordinate coordinate) {
         SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
 
         return DoubleUtil.compare(sphericCoordinate.radius, radius) &&
                 DoubleUtil.compare(sphericCoordinate.theta, theta) &&
                 DoubleUtil.compare(sphericCoordinate.phi, phi);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SphericCoordinate)) return false;
-
-        SphericCoordinate that = (SphericCoordinate) o;
-
-        return isEqual(that);
     }
 
     @Override

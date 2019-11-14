@@ -46,7 +46,13 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @return True, if they are the same, false, on the other hand.
      */
     @Override
-    public abstract boolean isEqual(Coordinate coordinate);
+    public boolean isEqual(Coordinate coordinate) {
+        if(coordinate == null) return false;
+
+        return doIsEqual(coordinate);
+    }
+
+    protected abstract boolean doIsEqual(Coordinate coordinate);
 
     @Override
     public boolean equals(Object o) {
