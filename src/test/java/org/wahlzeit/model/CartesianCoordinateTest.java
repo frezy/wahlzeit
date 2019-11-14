@@ -31,11 +31,6 @@ public class CartesianCoordinateTest {
         assertEquals(0.1, a.getCartesianDistance(c), 1E-5);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetCartesianDistanceIllegalArgumentException() {
-        a.getCartesianDistance(null);
-    }
-
     /**
      * r: https://www.wolframalpha.com/input/?i=sqrt%280.1%5E2%2B0.2%5E2%2B0.3%5E2%29
      * p: https://www.wolframalpha.com/input/?i=arctan%280.2%2F0.1%29
@@ -54,14 +49,9 @@ public class CartesianCoordinateTest {
      * https://www.wolframalpha.com/input/?i=arccos%28sin%281.1071487177940904%29*sin%281.1071487177940904%29%2Bcos%281.1071487177940904%29*cos%281.1071487177940904%29*cos%280.37416573867739417+-+0.30000000000000004%29%29
      */
     @Test
-    public void testGetCentralAngle() {
+    public void getCentralAngle() {
         assertEquals(0, a.getCentralAngle(b), 1E-5);
         assertEquals(0.033161844920283, a.getCentralAngle(c), 1E-5);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetCentralAngleIllegalArgumentException() {
-        a.getCentralAngle(null);
     }
 
     @Test
