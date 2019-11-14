@@ -13,6 +13,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private CartesianCoordinate() {};
 
     public CartesianCoordinate(double x, double y, double z) {
+        DoubleUtil.assertIsNotNaN(x, y, z);
+
         this.x = x;
         this.y = y;
         this.z = z;
@@ -22,12 +24,30 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return x;
     }
 
+    public void setX(double x) {
+        DoubleUtil.assertIsNotNaN(x);
+
+        this.x = x;
+    }
+
     public double getY() {
         return y;
     }
 
+    public void setY(double y) {
+        DoubleUtil.assertIsNotNaN(y);
+
+        this.y = y;
+    }
+
     public double getZ() {
         return z;
+    }
+
+    public void setZ(double z) {
+        DoubleUtil.assertIsNotNaN(z);
+
+        this.z = z;
     }
 
     /**
@@ -62,10 +82,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
     @Override
     public SphericCoordinate asSphericCoordinate() {
         double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
-        double p = Math.atan(y / x);
         double t = Math.acos(z / r);
+        double p = Math.atan(y / x);
 
-        return new SphericCoordinate(p, t, r);
+        return new SphericCoordinate(r, t, p);
     }
 
     /**

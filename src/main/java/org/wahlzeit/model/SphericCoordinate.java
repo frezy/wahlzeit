@@ -4,29 +4,55 @@ import org.wahlzeit.utils.DoubleUtil;
 
 import java.util.Objects;
 
-public class SphericCoordinate extends AbstractCoordinate {
-    private double phi;
-    private double theta;
+public class SphericCoordinate implements Coordinate {
     private double radius;
+    private double theta;
+    private double phi;
 
     private SphericCoordinate() {};
 
-    public SphericCoordinate(double phi, double theta, double radius) {
-        this.phi = phi;
-        this.theta = theta;
+    public SphericCoordinate(double radius, double theta, double phi) {
+        DoubleUtil.assertIsNotNaN(radius, theta, phi);
+        assertRadius(radius);
+        assertTheta(theta);
+        assertPhi(phi);
+
         this.radius = radius;
+        this.theta = theta;
+        this.phi = phi;
     }
 
-    public double getPhi() {
-        return phi;
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        DoubleUtil.assertIsNotNaN(radius);
+        assertRadius(radius);
+
+        this.radius = radius;
     }
 
     public double getTheta() {
         return theta;
     }
 
-    public double getRadius() {
-        return radius;
+    public void setTheta(double theta) {
+        DoubleUtil.assertIsNotNaN(theta);
+        assertTheta(theta);
+
+        this.theta = theta;
+    }
+
+    public double getPhi() {
+        return phi;
+    }
+
+    public void setPhi(double phi) {
+        DoubleUtil.assertIsNotNaN(phi);
+        assertPhi(phi);
+
+        this.phi = phi;
     }
 
     /**
@@ -40,6 +66,16 @@ public class SphericCoordinate extends AbstractCoordinate {
         double z = radius * Math.cos(theta);
 
         return new CartesianCoordinate(x, y, z);
+    }
+
+    /**
+     * Calculate the cartesian distance between the acutal and another Coordinate-object.
+     * @param coordinate another Coordinate-object.
+     * @return The cartesian distance between the two Coordinate-objects.
+     */
+    @Override
+    public double getCartesianDistance(Coordinate coordinate) {
+        return asCartesianCoordinate().getCartesianDistance(coordinate);
     }
 
     /**
@@ -58,8 +94,6 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     @Override
     public double getCentralAngle(Coordinate coordinate) {
-        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
-
         return doGetCentralAngle(coordinate.asSphericCoordinate());
     }
 
@@ -88,7 +122,29 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SphericCoordinate)) return false;
+
+        SphericCoordinate that = (SphericCoordinate) o;
+
+        return isEqual(that);
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(phi, theta, radius);
+        return Objects.hash(radius, theta, phi);
+    }
+
+    private static void assertRadius(double radius) {
+        if (radius < 0) throw new IllegalStateException("radius should between 0 and +Inf");
+    }
+
+    private static void assertTheta(double theta) {
+        if (theta < 0 || theta >= Math.PI) throw new IllegalStateException("theta sould be between 0 ≤ θ ≤ π rad");
+    }
+
+    private static void assertPhi(double phi) {
+        if (phi < 0 || phi >= 2 * Math.PI) throw new IllegalStateException("phi should be between 0 ≤ φ < 2π rad");
     }
 }

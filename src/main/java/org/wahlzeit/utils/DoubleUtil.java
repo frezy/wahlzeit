@@ -9,4 +9,10 @@ public class DoubleUtil {
 
         return Math.abs(x - y) < DELTA;
     }
+
+    public static void assertIsNotNaN(double... values) {
+        for (double v : values) {
+            if (Double.isNaN(v)) throw new IllegalStateException("value should be not NaN");
+        }
+    }
 }

@@ -14,9 +14,9 @@ public class SphericCoordinateTest {
 
     @Before
     public void setUp() {
-        a = new SphericCoordinate(1.1071487177940904, 0.6405223126794247, 0.37416573867739417);
-        b = new SphericCoordinate(1.1071487177940904, 0.6405223126794247, 0.37416573867739417);
-        c = new SphericCoordinate(1.1071487177940904, 0.8410686705679303, 0.30000000000000004);
+        a = new SphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
+        b = new SphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
+        c = new SphericCoordinate(0.30000000000000004, 0.8410686705679303, 1.1071487177940904);
     }
 
     @Test
@@ -67,6 +67,6 @@ public class SphericCoordinateTest {
 
     @Test
     public void testHashCode() {
-        assertEquals(Objects.hash(a.getPhi(), a.getTheta(), a.getRadius()), a.hashCode());
+        assertEquals(Objects.hash(a.getRadius(), a.getTheta(), a.getPhi()), a.hashCode());
     }
 }
