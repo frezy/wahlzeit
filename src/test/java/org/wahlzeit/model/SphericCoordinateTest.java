@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.wahlzeit.utils.DoubleUtil;
 
+import java.lang.reflect.Constructor;
 import java.util.Objects;
 
 import static org.junit.Assert.*;
@@ -17,6 +18,64 @@ public class SphericCoordinateTest {
         a = new SphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
         b = new SphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
         c = new SphericCoordinate(0.30000000000000004, 0.8410686705679303, 1.1071487177940904);
+    }
+
+    @Test
+    public void testDefaultConstructor() throws Exception {
+        Constructor<SphericCoordinate> constructor = SphericCoordinate.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        SphericCoordinate sphericCoordinate = constructor.newInstance();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testParameterIsNan() {
+        new SphericCoordinate(Double.NaN, 0.0, 0.0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testRadiusException() {
+        a.setRadius(-1.0);
+    }
+
+    @Test
+    public void testSetRadius() {
+        a.setRadius(1.5);
+
+        assertEquals(1.5, a.getRadius(), 1E-5);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testThetaExceptionLow() {
+        a.setTheta(-1.0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testThetaExceptionHigh() {
+        a.setTheta(Math.PI);
+    }
+
+    @Test
+    public void testSetTheta() {
+        a.setTheta(1.5);
+
+        assertEquals(1.5, a.getTheta(), 1E-5);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testPhiExceptionLow() {
+        a.setTheta(-1.0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testPhiExceptionHigh() {
+        a.setTheta(2 * Math.PI);
+    }
+
+    @Test
+    public void testSetPhi() {
+        a.setPhi(1.5);
+
+        assertEquals(1.5, a.getPhi(), 1E-5);
     }
 
     @Test

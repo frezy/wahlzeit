@@ -3,6 +3,7 @@ package org.wahlzeit.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
 import java.util.Objects;
 
 import static org.junit.Assert.*;
@@ -18,6 +19,39 @@ public class CartesianCoordinateTest {
         a = new CartesianCoordinate(0.1, 0.2, 0.3);
         b = new CartesianCoordinate(0.1, 0.2, 0.3);
         c = new CartesianCoordinate(0.1, 0.2, 0.2);
+    }
+
+    @Test
+    public void testDefaultConstructor() throws Exception {
+        Constructor<CartesianCoordinate> constructor = CartesianCoordinate.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        CartesianCoordinate sphericCoordinate = constructor.newInstance();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testParameterIsNan() {
+        new SphericCoordinate(0.0, Double.NaN, 0.0);
+    }
+
+    @Test
+    public void testSetX() {
+        a.setX(1.0);
+
+        assertEquals(1.0, a.getX(), 1E-5);
+    }
+
+    @Test
+    public void testSetY() {
+        a.setY(1.0);
+
+        assertEquals(1.0, a.getY(), 1E-5);
+    }
+
+    @Test
+    public void testSetZ() {
+        a.setZ(1.0);
+
+        assertEquals(1.0, a.getZ(), 1E-5);
     }
 
     @Test
