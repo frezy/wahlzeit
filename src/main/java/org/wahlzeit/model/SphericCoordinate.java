@@ -12,7 +12,7 @@ public class SphericCoordinate implements Coordinate {
     private SphericCoordinate() {};
 
     public SphericCoordinate(double radius, double theta, double phi) {
-        DoubleUtil.assertIsNotNaN(radius, theta, phi);
+        DoubleUtil.assertIsFinite(radius, theta, phi);
         assertRadius(radius);
         assertTheta(theta);
         assertPhi(phi);
@@ -27,7 +27,7 @@ public class SphericCoordinate implements Coordinate {
     }
 
     public void setRadius(double radius) {
-        DoubleUtil.assertIsNotNaN(radius);
+        Double.isFinite(radius);
         assertRadius(radius);
 
         this.radius = radius;
@@ -38,7 +38,7 @@ public class SphericCoordinate implements Coordinate {
     }
 
     public void setTheta(double theta) {
-        DoubleUtil.assertIsNotNaN(theta);
+        Double.isFinite(theta);
         assertTheta(theta);
 
         this.theta = theta;

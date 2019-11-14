@@ -13,7 +13,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private CartesianCoordinate() {};
 
     public CartesianCoordinate(double x, double y, double z) {
-        DoubleUtil.assertIsNotNaN(x, y, z);
+        DoubleUtil.assertIsFinite(x, y, z);
 
         this.x = x;
         this.y = y;
@@ -25,7 +25,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     public void setX(double x) {
-        DoubleUtil.assertIsNotNaN(x);
+        Double.isFinite(x);
 
         this.x = x;
     }
@@ -35,7 +35,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     public void setY(double y) {
-        DoubleUtil.assertIsNotNaN(y);
+        Double.isFinite(y);
 
         this.y = y;
     }
@@ -45,7 +45,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     public void setZ(double z) {
-        DoubleUtil.assertIsNotNaN(z);
+        Double.isFinite(z);
 
         this.z = z;
     }

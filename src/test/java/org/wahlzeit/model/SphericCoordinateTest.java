@@ -28,6 +28,11 @@ public class SphericCoordinateTest {
     }
 
     @Test(expected = IllegalStateException.class)
+    public void testParameterIsInfinite() {
+        new SphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
+    }
+
+    @Test(expected = IllegalStateException.class)
     public void testParameterIsNan() {
         new SphericCoordinate(Double.NaN, 0.0, 0.0);
     }

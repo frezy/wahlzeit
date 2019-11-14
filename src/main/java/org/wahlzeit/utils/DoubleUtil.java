@@ -15,4 +15,16 @@ public class DoubleUtil {
             if (Double.isNaN(v)) throw new IllegalStateException("value should be not NaN");
         }
     }
+
+    public static void assertIsNotInfinite(double... values) {
+        for(double v : values) {
+            if (Double.isInfinite(v)) throw new IllegalStateException("value should be not infinite");
+        }
+    }
+
+    public static void assertIsFinite(double... values) {
+        for(double v : values) {
+            if (!Double.isFinite(v)) throw new IllegalStateException("value should be finite");
+        }
+    }
 }
