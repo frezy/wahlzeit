@@ -17,8 +17,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         this.x = x;
         this.y = y;
         this.z = z;
-
-        assertClassInvariants();
     }
 
     public double getX() {
@@ -29,8 +27,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertDoublesAreFinite(x);
 
         this.x = x;
-
-        assertDoublesAreFinite(x);
     }
 
     public double getY() {
@@ -41,8 +37,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertDoublesAreFinite(y);
 
         this.y = y;
-
-        assertDoublesAreFinite(y);
     }
 
     public double getZ() {
@@ -53,8 +47,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertDoublesAreFinite(z);
 
         this.z = z;
-
-        assertDoublesAreFinite(z);
     }
 
     /**
