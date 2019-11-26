@@ -24,7 +24,7 @@ public class DoubleUtil {
 
     public static void assertIsFinite(double... values) {
         for(double v : values) {
-            if (!Double.isFinite(v)) throw new IllegalStateException("value should be finite");
+            assert Double.isFinite(v);
         }
     }
 }

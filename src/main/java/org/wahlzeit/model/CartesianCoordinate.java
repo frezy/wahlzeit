@@ -1,7 +1,6 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.utils.DoubleUtil;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Objects;
 
@@ -13,11 +12,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private CartesianCoordinate() {};
 
     public CartesianCoordinate(double x, double y, double z) {
-        DoubleUtil.assertIsFinite(x, y, z);
+        assertDoublesAreFinite(x, y, z);
 
         this.x = x;
         this.y = y;
         this.z = z;
+
+        assertClassInvariants();
     }
 
     public double getX() {
@@ -25,9 +26,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     public void setX(double x) {
-        Double.isFinite(x);
+        assertDoublesAreFinite(x);
 
         this.x = x;
+
+        assertDoublesAreFinite(x);
     }
 
     public double getY() {
@@ -35,9 +38,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     public void setY(double y) {
-        Double.isFinite(y);
+        assertDoublesAreFinite(y);
 
         this.y = y;
+
+        assertDoublesAreFinite(y);
     }
 
     public double getZ() {
@@ -45,9 +50,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     public void setZ(double z) {
-        Double.isFinite(z);
+        assertDoublesAreFinite(z);
 
         this.z = z;
+
+        assertDoublesAreFinite(z);
     }
 
     /**
@@ -72,7 +79,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     private double doGetCartesianDistance(CartesianCoordinate cartesianCoordinate) {
-        return Math.sqrt(Math.pow(cartesianCoordinate.x - x, 2) + Math.pow(cartesianCoordinate.y - y, 2) + Math.pow(cartesianCoordinate.z - z, 2));
+        return Math.sqrt(Math.pow(cartesianCoordinate.x - x, 2) +
+                Math.pow(cartesianCoordinate.y - y, 2) +
+                Math.pow(cartesianCoordinate.z - z, 2));
     }
 
     /**
@@ -81,6 +90,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
+        assertClassInvariants();
+
         double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
         double t = Math.acos(z / r);
         double p = Math.atan(y / x);
@@ -94,12 +105,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @return True, if they are the same, false, on the other hand.
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) {
-        if(coordinate == null) return false;
-
-        return doIsEqual(coordinate);
-    }
-
     protected boolean doIsEqual(Coordinate coordinate) {
         CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
 
@@ -111,5 +116,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
     @Override
     public int hashCode() {
         return Objects.hash(x, y, z);
+    }
+
+    private static void assertDoublesAreFinite(double... values) {
+        DoubleUtil.assertIsFinite(values);
+    }
+
+    protected void assertClassInvariants() {
+        assertDoublesAreFinite(x, y, z);
     }
 }

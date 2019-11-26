@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,12 +29,12 @@ public class CartesianCoordinateTest {
         CartesianCoordinate sphericCoordinate = constructor.newInstance();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testParameterIsInfinite() {
         new SphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testParameterIsNan() {
         new SphericCoordinate(0.0, Double.NaN, 0.0);
     }

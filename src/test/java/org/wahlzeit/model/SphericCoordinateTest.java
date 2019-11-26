@@ -2,7 +2,6 @@ package org.wahlzeit.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wahlzeit.utils.DoubleUtil;
 
 import java.lang.reflect.Constructor;
 import java.util.Objects;
@@ -27,17 +26,17 @@ public class SphericCoordinateTest {
         SphericCoordinate sphericCoordinate = constructor.newInstance();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testParameterIsInfinite() {
         new SphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testParameterIsNan() {
         new SphericCoordinate(Double.NaN, 0.0, 0.0);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testRadiusException() {
         a.setRadius(-1.0);
     }
@@ -49,14 +48,14 @@ public class SphericCoordinateTest {
         assertEquals(1.5, a.getRadius(), 1E-5);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testThetaExceptionLow() {
         a.setTheta(-1.0);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testThetaExceptionHigh() {
-        a.setTheta(Math.PI);
+        a.setTheta(Math.PI + 0.1);
     }
 
     @Test
@@ -66,12 +65,12 @@ public class SphericCoordinateTest {
         assertEquals(1.5, a.getTheta(), 1E-5);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testPhiExceptionLow() {
         a.setTheta(-1.0);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = AssertionError.class)
     public void testPhiExceptionHigh() {
         a.setTheta(2 * Math.PI);
     }

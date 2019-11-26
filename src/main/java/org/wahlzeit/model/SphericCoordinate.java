@@ -12,10 +12,9 @@ public class SphericCoordinate extends AbstractCoordinate {
     private SphericCoordinate() {};
 
     public SphericCoordinate(double radius, double theta, double phi) {
-        DoubleUtil.assertIsFinite(radius, theta, phi);
-        assertRadius(radius);
-        assertTheta(theta);
-        assertPhi(phi);
+        assertRadiusIsValid(radius);
+        assertThetaIsValid(theta);
+        assertPhiIsValid(phi);
 
         this.radius = radius;
         this.theta = theta;
@@ -27,8 +26,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     public void setRadius(double radius) {
-        Double.isFinite(radius);
-        assertRadius(radius);
+        assertRadiusIsValid(radius);
 
         this.radius = radius;
     }
@@ -38,8 +36,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     public void setTheta(double theta) {
-        Double.isFinite(theta);
-        assertTheta(theta);
+        assertThetaIsValid(theta);
 
         this.theta = theta;
     }
@@ -49,8 +46,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     public void setPhi(double phi) {
-        DoubleUtil.assertIsNotNaN(phi);
-        assertPhi(phi);
+        assertPhiIsValid(phi);
 
         this.phi = phi;
     }
@@ -61,6 +57,8 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
+        assertClassInvariants();
+
         double x = radius * Math.sin(theta) * Math.cos(phi);
         double y = radius * Math.sin(theta) * Math.sin(phi);
         double z = radius * Math.cos(theta);
@@ -84,6 +82,8 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     @Override
     public double getCentralAngle(Coordinate coordinate) {
+        assertClassInvariants();
+
         return doGetCentralAngle(coordinate.asSphericCoordinate());
     }
 
@@ -105,15 +105,28 @@ public class SphericCoordinate extends AbstractCoordinate {
         return Objects.hash(radius, theta, phi);
     }
 
-    private static void assertRadius(double radius) {
-        if (radius < 0) throw new IllegalStateException("radius should between 0 and +Inf");
+    private static void assertDoublesAreFinite(double... values) {
+        DoubleUtil.assertIsFinite(values);
     }
 
-    private static void assertTheta(double theta) {
-        if (theta < 0 || theta >= Math.PI) throw new IllegalStateException("theta sould be between 0 ≤ θ ≤ π rad");
+    private static void assertRadiusIsValid(double radius) {
+        assertDoublesAreFinite(radius);
+        assert radius >= 0;
     }
 
-    private static void assertPhi(double phi) {
-        if (phi < 0 || phi >= 2 * Math.PI) throw new IllegalStateException("phi should be between 0 ≤ φ < 2π rad");
+    private static void assertThetaIsValid(double theta) {
+        assertThetaIsValid(theta);
+        assert theta >= 0 && theta <= Math.PI;
+    }
+
+    private static void assertPhiIsValid(double phi) {
+        assertDoublesAreFinite(phi);
+        assert phi >= 0 && phi < 2 * Math.PI;
+    }
+
+    protected void assertClassInvariants() {
+        assertRadiusIsValid(radius);
+        assertThetaIsValid(theta);
+        assertPhiIsValid(phi);
     }
 }

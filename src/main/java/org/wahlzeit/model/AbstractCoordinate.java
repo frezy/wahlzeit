@@ -16,7 +16,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      */
     @Override
     public double getCartesianDistance(Coordinate coordinate) {
-        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
+        assertClassInvariants();
 
         return asCartesianCoordinate().getCartesianDistance(coordinate);
     }
@@ -35,7 +35,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      */
     @Override
     public double getCentralAngle(Coordinate coordinate) {
-        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
+        assertClassInvariants();
 
         return asSphericCoordinate().getCentralAngle(coordinate);
     }
@@ -47,7 +47,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      */
     @Override
     public boolean isEqual(Coordinate coordinate) {
-        if(coordinate == null) return false;
+        assertClassInvariants();
 
         return doIsEqual(coordinate);
     }
@@ -63,4 +63,10 @@ public abstract class AbstractCoordinate implements Coordinate {
 
         return isEqual(that);
     }
+
+    /*protected void assertNotNullArgument(Object o) {
+        assert o != null;
+    }*/
+
+    protected abstract void assertClassInvariants();
 }
