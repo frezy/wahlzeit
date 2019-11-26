@@ -115,7 +115,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     private static void assertThetaIsValid(double theta) {
-        assertThetaIsValid(theta);
+        assertDoublesAreFinite(theta);
         assert theta >= 0 && theta <= Math.PI;
     }
 
