@@ -15,7 +15,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @return The cartesian distance between the two Coordinate-objects.
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate) {
+    public double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
         assertClassInvariants();
 
         return asCartesianCoordinate().getCartesianDistance(coordinate);
@@ -34,7 +34,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @return The central angle between the two Coordinate-objects.
      */
     @Override
-    public double getCentralAngle(Coordinate coordinate) {
+    public double getCentralAngle(Coordinate coordinate) throws IllegalArgumentException {
         assertClassInvariants();
 
         return asSphericCoordinate().getCentralAngle(coordinate);
@@ -46,7 +46,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @return True, if they are the same, false, on the other hand.
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) {
+    public boolean isEqual(Coordinate coordinate) throws IllegalArgumentException {
         assertClassInvariants();
 
         return doIsEqual(coordinate);
@@ -68,5 +68,5 @@ public abstract class AbstractCoordinate implements Coordinate {
         assert o != null;
     }*/
 
-    protected abstract void assertClassInvariants();
+    protected abstract void assertClassInvariants() throws IllegalArgumentException;
 }

@@ -44,7 +44,7 @@ public class FoodPhotoFactory extends PhotoFactory {
     /**
      * Method to set the singleton instance of PhotoFactory.
      */
-    protected static synchronized void setInstance(FoodPhotoFactory foodPhotoFactory) {
+    protected static synchronized void setInstance(FoodPhotoFactory foodPhotoFactory) throws IllegalStateException {
         if (instance != null) {
             throw new IllegalStateException("attempt to initalize FoodPhotoFactory twice");
         }

@@ -11,7 +11,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
     private CartesianCoordinate() {};
 
-    public CartesianCoordinate(double x, double y, double z) {
+    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
         assertDoublesAreFinite(x, y, z);
 
         this.x = x;
@@ -23,7 +23,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(double x) throws IllegalArgumentException {
         assertDoublesAreFinite(x);
 
         this.x = x;
@@ -33,7 +33,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(double y) throws IllegalArgumentException {
         assertDoublesAreFinite(y);
 
         this.y = y;
@@ -43,7 +43,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return z;
     }
 
-    public void setZ(double z) {
+    public void setZ(double z) throws IllegalArgumentException {
         assertDoublesAreFinite(z);
 
         this.z = z;
@@ -64,8 +64,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @return The cartesian distance between the two Coordinate-objects.
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-        if(coordinate == null) throw new IllegalArgumentException("coordinate should not be null");
+    public double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
+        assertClassInvariants();
 
         return doGetCartesianDistance(coordinate.asCartesianCoordinate());
     }
@@ -81,7 +81,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @return The actual Coordinate-object as SphericCoordinate-object.
      */
     @Override
-    public SphericCoordinate asSphericCoordinate() {
+    public SphericCoordinate asSphericCoordinate() throws IllegalArgumentException {
         assertClassInvariants();
 
         double r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
@@ -91,11 +91,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return new SphericCoordinate(r, t, p);
     }
 
-    /**
-     * Checks if the actual Coordinate-object and the other Coordinate-object is equal.
-     * @param coordinate The other Coordinate-object.
-     * @return True, if they are the same, false, on the other hand.
-     */
     @Override
     protected boolean doIsEqual(Coordinate coordinate) {
         CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
@@ -110,11 +105,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return Objects.hash(x, y, z);
     }
 
-    private static void assertDoublesAreFinite(double... values) {
-        DoubleUtil.assertIsFinite(values);
+    private static void assertDoublesAreFinite(double... values) throws IllegalArgumentException {
+        for(double v : values) {
+            DoubleUtil.assertIsFinite(v);
+        }
     }
 
-    protected void assertClassInvariants() {
+    protected void assertClassInvariants() throws IllegalArgumentException {
         assertDoublesAreFinite(x, y, z);
     }
 }

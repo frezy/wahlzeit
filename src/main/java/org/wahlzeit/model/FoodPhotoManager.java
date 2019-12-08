@@ -48,7 +48,7 @@ public class FoodPhotoManager extends PhotoManager {
      *
      */
     public boolean hasPhoto(PhotoId id) {
-        return getPhoto(id) != null;
+       return getPhoto(id) != null;
     }
 
     /**

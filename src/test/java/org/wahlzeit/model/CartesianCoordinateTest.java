@@ -29,12 +29,12 @@ public class CartesianCoordinateTest {
         CartesianCoordinate sphericCoordinate = constructor.newInstance();
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testParameterIsInfinite() {
         new SphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testParameterIsNan() {
         new SphericCoordinate(0.0, Double.NaN, 0.0);
     }

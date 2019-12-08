@@ -1,6 +1,7 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.utils.DoubleUtil;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     private SphericCoordinate() {};
 
-    public SphericCoordinate(double radius, double theta, double phi) {
+    public SphericCoordinate(double radius, double theta, double phi) throws IllegalArgumentException {
         assertRadiusIsValid(radius);
         assertThetaIsValid(theta);
         assertPhiIsValid(phi);
@@ -25,7 +26,7 @@ public class SphericCoordinate extends AbstractCoordinate {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(double radius) throws IllegalArgumentException {
         assertRadiusIsValid(radius);
 
         this.radius = radius;
@@ -35,7 +36,7 @@ public class SphericCoordinate extends AbstractCoordinate {
         return theta;
     }
 
-    public void setTheta(double theta) {
+    public void setTheta(double theta) throws IllegalArgumentException {
         assertThetaIsValid(theta);
 
         this.theta = theta;
@@ -45,7 +46,7 @@ public class SphericCoordinate extends AbstractCoordinate {
         return phi;
     }
 
-    public void setPhi(double phi) {
+    public void setPhi(double phi) throws IllegalArgumentException {
         assertPhiIsValid(phi);
 
         this.phi = phi;
@@ -56,7 +57,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @return The actual Coordinate-object as CartesianCoordinate-object.
      */
     @Override
-    public CartesianCoordinate asCartesianCoordinate() {
+    public CartesianCoordinate asCartesianCoordinate() throws IllegalArgumentException {
         assertClassInvariants();
 
         double x = radius * Math.sin(theta) * Math.cos(phi);
@@ -81,7 +82,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @return The central angle between the two Coordinate-objects.
      */
     @Override
-    public double getCentralAngle(Coordinate coordinate) {
+    public double getCentralAngle(Coordinate coordinate) throws IllegalArgumentException {
         assertClassInvariants();
 
         return doGetCentralAngle(coordinate.asSphericCoordinate());
@@ -105,26 +106,34 @@ public class SphericCoordinate extends AbstractCoordinate {
         return Objects.hash(radius, theta, phi);
     }
 
-    private static void assertDoublesAreFinite(double... values) {
-        DoubleUtil.assertIsFinite(values);
+    private static void assertDoublesAreFinite(double... values) throws NotImplementedException {
+        for (double v : values) {
+            DoubleUtil.assertIsFinite(v);
+        }
     }
 
-    private static void assertRadiusIsValid(double radius) {
+    private static void assertRadiusIsValid(double radius) throws IllegalArgumentException {
         assertDoublesAreFinite(radius);
-        assert radius >= 0;
+        if (radius < 0) {
+            throw new IllegalArgumentException("Radius not greater than 0.");
+        }
     }
 
-    private static void assertThetaIsValid(double theta) {
+    private static void assertThetaIsValid(double theta) throws IllegalArgumentException {
         assertDoublesAreFinite(theta);
-        assert theta >= 0 && theta <= Math.PI;
+        if (theta < 0 || theta > Math.PI) {
+            throw new IllegalArgumentException("Theta not greater than 0 and equal-smaller than Math.PI.");
+        }
     }
 
-    private static void assertPhiIsValid(double phi) {
+    private static void assertPhiIsValid(double phi) throws IllegalArgumentException {
         assertDoublesAreFinite(phi);
-        assert phi >= 0 && phi < 2 * Math.PI;
+        if (phi < 0 && phi >= 2 * Math.PI) {
+            throw new IllegalArgumentException("Phi not greater than 0 and smaller than 2*Math.PI.");
+        }
     }
 
-    protected void assertClassInvariants() {
+    protected void assertClassInvariants() throws IllegalArgumentException {
         assertRadiusIsValid(radius);
         assertThetaIsValid(theta);
         assertPhiIsValid(phi);

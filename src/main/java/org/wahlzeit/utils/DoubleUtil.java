@@ -22,9 +22,9 @@ public class DoubleUtil {
         }
     }
 
-    public static void assertIsFinite(double... values) {
-        for(double v : values) {
-            assert Double.isFinite(v);
+    public static void assertIsFinite(double value) throws IllegalArgumentException {
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Value " + value + " is not finite!");
         }
     }
 }
