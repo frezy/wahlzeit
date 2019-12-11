@@ -1,4 +1,4 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.coordinate;
 
 import org.wahlzeit.utils.DoubleUtil;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -12,7 +12,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     private SphericCoordinate() {};
 
-    public SphericCoordinate(double radius, double theta, double phi) throws IllegalArgumentException {
+    private SphericCoordinate(double radius, double theta, double phi) throws IllegalArgumentException {
         assertRadiusIsValid(radius);
         assertThetaIsValid(theta);
         assertPhiIsValid(phi);
@@ -22,11 +22,29 @@ public class SphericCoordinate extends AbstractCoordinate {
         this.phi = phi;
     }
 
+    public static SphericCoordinate getSphericCoordinate(double radius, double theta, double phi) throws IllegalArgumentException {
+        int hash = makeHashCode(radius, theta, phi);
+        /*if(coordinates.containsKey(hash)) {
+            SphericCoordinate sphericCoordinate = (SphericCoordinate) coordinates.get(hash);
+            return sphericCoordinate;
+        }
+
+        SphericCoordinate sphericCoordinate = (SphericCoordinate) coordinates.put(hash, new SphericCoordinate(radius, theta, phi));
+        return sphericCoordinate;*/
+        SphericCoordinate coordinate = (SphericCoordinate)coordinates.get(hash);
+        if(coordinate == null) {
+            coordinate = new SphericCoordinate(radius, theta, phi);
+            coordinates.put(hash, coordinate);
+        }
+
+        return coordinate;
+    }
+
     public double getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) throws IllegalArgumentException {
+    private void setRadius(double radius) throws IllegalArgumentException {
         assertRadiusIsValid(radius);
 
         this.radius = radius;
@@ -36,7 +54,7 @@ public class SphericCoordinate extends AbstractCoordinate {
         return theta;
     }
 
-    public void setTheta(double theta) throws IllegalArgumentException {
+    private void setTheta(double theta) throws IllegalArgumentException {
         assertThetaIsValid(theta);
 
         this.theta = theta;
@@ -46,7 +64,7 @@ public class SphericCoordinate extends AbstractCoordinate {
         return phi;
     }
 
-    public void setPhi(double phi) throws IllegalArgumentException {
+    private void setPhi(double phi) throws IllegalArgumentException {
         assertPhiIsValid(phi);
 
         this.phi = phi;
@@ -64,7 +82,7 @@ public class SphericCoordinate extends AbstractCoordinate {
         double y = radius * Math.sin(theta) * Math.sin(phi);
         double z = radius * Math.cos(theta);
 
-        return new CartesianCoordinate(x, y, z);
+        return CartesianCoordinate.getCartesianCoordinate(x, y, z);
     }
 
     /**
@@ -92,17 +110,21 @@ public class SphericCoordinate extends AbstractCoordinate {
         return Math.acos(Math.sin(this.phi) * Math.sin(sphericCoordinate.phi) + Math.cos(this.phi) * Math.cos(sphericCoordinate.phi) * Math.cos(Math.abs(this.radius - sphericCoordinate.radius))); //TODO check physics vs math https://en.wikipedia.org/wiki/Great-circle_distance
     }
 
-    @Override
+    /*@Override
     protected boolean doIsEqual(Coordinate coordinate) {
         SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
 
         return DoubleUtil.compare(sphericCoordinate.radius, radius) &&
                 DoubleUtil.compare(sphericCoordinate.theta, theta) &&
                 DoubleUtil.compare(sphericCoordinate.phi, phi);
-    }
+    }*/
 
     @Override
     public int hashCode() {
+        return Objects.hash(radius, theta, phi);
+    }
+
+    private static int makeHashCode(double radius, double theta, double phi) {
         return Objects.hash(radius, theta, phi);
     }
 

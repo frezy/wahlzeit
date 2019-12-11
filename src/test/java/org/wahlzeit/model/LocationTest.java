@@ -2,6 +2,7 @@ package org.wahlzeit.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
 
 import java.util.Objects;
 
@@ -15,15 +16,15 @@ public class LocationTest {
 
     @Before
     public void setUp() {
-        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(0.1, 0.2, 0.3);
+        CartesianCoordinate cartesianCoordinate = CartesianCoordinate.getCartesianCoordinate(0.1, 0.2, 0.3);
         a = new Location(cartesianCoordinate);
         b = new Location(cartesianCoordinate);
-        c = new Location(new CartesianCoordinate(0.4, 0.5, 0.6));
+        c = new Location(CartesianCoordinate.getCartesianCoordinate(0.4, 0.5, 0.6));
     }
 
     @Test
     public void testLocationGetterSetter() {
-        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(0.7, 0.8, 0.9);
+        CartesianCoordinate cartesianCoordinate = CartesianCoordinate.getCartesianCoordinate(0.7, 0.8, 0.9);
         a.setCoordinate(cartesianCoordinate);
 
         assertEquals(cartesianCoordinate, a.getCoordinate());

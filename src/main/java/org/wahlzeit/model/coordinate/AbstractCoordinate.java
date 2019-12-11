@@ -1,6 +1,10 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.coordinate;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractCoordinate implements Coordinate {
+    protected static Map<Integer, Coordinate> coordinates = new ConcurrentHashMap<>();
 
     /**
      * Converts the actual Coordinate-object to an CartesianCoordinate-object.
@@ -49,10 +53,10 @@ public abstract class AbstractCoordinate implements Coordinate {
     public boolean isEqual(Coordinate coordinate) throws IllegalArgumentException {
         assertClassInvariants();
 
-        return doIsEqual(coordinate);
+        return this == coordinate;
     }
 
-    protected abstract boolean doIsEqual(Coordinate coordinate);
+    /*protected abstract boolean doIsEqual(Coordinate coordinate);*/
 
     @Override
     public boolean equals(Object o) {

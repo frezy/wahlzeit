@@ -2,6 +2,8 @@ package org.wahlzeit.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
+import org.wahlzeit.model.coordinate.SphericCoordinate;
 
 import java.lang.reflect.Constructor;
 import java.util.Objects;
@@ -14,9 +16,9 @@ public class SphericCoordinateTest {
 
     @Before
     public void setUp() {
-        a = new SphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
-        b = new SphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
-        c = new SphericCoordinate(0.30000000000000004, 0.8410686705679303, 1.1071487177940904);
+        a = SphericCoordinate.getSphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
+        b = SphericCoordinate.getSphericCoordinate(0.37416573867739417, 0.6405223126794247, 1.1071487177940904);
+        c = SphericCoordinate.getSphericCoordinate(0.30000000000000004, 0.8410686705679303, 1.1071487177940904);
     }
 
     @Test
@@ -28,15 +30,15 @@ public class SphericCoordinateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testParameterIsInfinite() {
-        new SphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
+        SphericCoordinate.getSphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testParameterIsNan() {
-        new SphericCoordinate(Double.NaN, 0.0, 0.0);
+        SphericCoordinate.getSphericCoordinate(Double.NaN, 0.0, 0.0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    /*@Test(expected = IllegalArgumentException.class)
     public void testRadiusException() {
         a.setRadius(-1.0);
     }
@@ -80,7 +82,7 @@ public class SphericCoordinateTest {
         a.setPhi(1.5);
 
         assertEquals(1.5, a.getPhi(), 1E-5);
-    }
+    }*/
 
     @Test
     public void asCartesianCoordinate() {

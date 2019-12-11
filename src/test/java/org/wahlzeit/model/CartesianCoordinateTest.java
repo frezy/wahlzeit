@@ -1,8 +1,9 @@
 package org.wahlzeit.model;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
+import org.wahlzeit.model.coordinate.SphericCoordinate;
 
 import java.lang.reflect.Constructor;
 import java.util.Objects;
@@ -17,9 +18,9 @@ public class CartesianCoordinateTest {
 
     @Before
     public void setUp() {
-        a = new CartesianCoordinate(0.1, 0.2, 0.3);
-        b = new CartesianCoordinate(0.1, 0.2, 0.3);
-        c = new CartesianCoordinate(0.1, 0.2, 0.2);
+        a = CartesianCoordinate.getCartesianCoordinate(0.1, 0.2, 0.3);
+        b = CartesianCoordinate.getCartesianCoordinate(0.1, 0.2, 0.3);
+        c = CartesianCoordinate.getCartesianCoordinate(0.1, 0.2, 0.2);
     }
 
     @Test
@@ -31,15 +32,15 @@ public class CartesianCoordinateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testParameterIsInfinite() {
-        new SphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
+        SphericCoordinate.getSphericCoordinate(Double.POSITIVE_INFINITY, 0.0, 0.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testParameterIsNan() {
-        new SphericCoordinate(0.0, Double.NaN, 0.0);
+        SphericCoordinate.getSphericCoordinate(0.0, Double.NaN, 0.0);
     }
 
-    @Test
+    /*@Test
     public void testSetX() {
         a.setX(1.0);
 
@@ -58,7 +59,7 @@ public class CartesianCoordinateTest {
         a.setZ(1.0);
 
         assertEquals(1.0, a.getZ(), 1E-5);
-    }
+    }*/
 
     @Test
     public void testAsCartesianCoordinate() {

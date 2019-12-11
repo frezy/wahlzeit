@@ -1,4 +1,4 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.coordinate;
 
 import org.wahlzeit.utils.DoubleUtil;
 
@@ -9,9 +9,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
     private double y;
     private double z;
 
+    //private Map<Integer, CartesianCoordinate> coordinateMap = new ConcurrentHashMap<>();
+
     private CartesianCoordinate() {};
 
-    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
+    private CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
         assertDoublesAreFinite(x, y, z);
 
         this.x = x;
@@ -19,11 +21,29 @@ public class CartesianCoordinate extends AbstractCoordinate {
         this.z = z;
     }
 
+    public static CartesianCoordinate getCartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
+        int hash = makeHashCode(x, y, z);
+        /*if(coordinates.containsKey(hash)) {
+            CartesianCoordinate cartesianCoordinate = (CartesianCoordinate)coordinates.get(hash);
+            return cartesianCoordinate;
+        }
+
+        CartesianCoordinate cartesianCoordinate = (CartesianCoordinate)coordinates.put(hash, new CartesianCoordinate(x, y, z));
+        return cartesianCoordinate;*/
+        CartesianCoordinate coordinate = (CartesianCoordinate)coordinates.get(hash);
+        if(coordinate == null) {
+            coordinate = new CartesianCoordinate(x, y, z);
+            coordinates.put(hash, coordinate);
+        }
+
+        return coordinate;
+    }
+
     public double getX() {
         return x;
     }
 
-    public void setX(double x) throws IllegalArgumentException {
+    private void setX(double x) throws IllegalArgumentException {
         assertDoublesAreFinite(x);
 
         this.x = x;
@@ -33,7 +53,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return y;
     }
 
-    public void setY(double y) throws IllegalArgumentException {
+    private void setY(double y) throws IllegalArgumentException {
         assertDoublesAreFinite(y);
 
         this.y = y;
@@ -43,7 +63,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return z;
     }
 
-    public void setZ(double z) throws IllegalArgumentException {
+    private void setZ(double z) throws IllegalArgumentException {
         assertDoublesAreFinite(z);
 
         this.z = z;
@@ -88,20 +108,24 @@ public class CartesianCoordinate extends AbstractCoordinate {
         double t = Math.acos(z / r);
         double p = Math.atan(y / x);
 
-        return new SphericCoordinate(r, t, p);
+        return SphericCoordinate.getSphericCoordinate(r, t, p);
     }
 
-    @Override
+    /*@Override
     protected boolean doIsEqual(Coordinate coordinate) {
         CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
 
         return DoubleUtil.compare(cartesianCoordinate.x, x) &&
                 DoubleUtil.compare(cartesianCoordinate.y, y) &&
                 DoubleUtil.compare(cartesianCoordinate.z, z);
-    }
+    }*/
 
     @Override
     public int hashCode() {
+        return makeHashCode(x, y, z);
+    }
+
+    private static int makeHashCode(double x, double y, double z) {
         return Objects.hash(x, y, z);
     }
 
@@ -113,5 +137,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
     protected void assertClassInvariants() throws IllegalArgumentException {
         assertDoublesAreFinite(x, y, z);
+    }
+
+    private void assertMapIncrease() throws IllegalArgumentException {
+
     }
 }

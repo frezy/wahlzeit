@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.model.coordinate.Coordinate;
+
 import java.util.Objects;
 
 /**
