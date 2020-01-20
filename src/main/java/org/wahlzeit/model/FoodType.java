@@ -14,6 +14,7 @@ import java.util.Set;
 
 public class FoodType {
     private String type;
+    private boolean allergen = false;
     protected FoodType superType = null;
     protected Set<FoodType> subTypes = new HashSet<FoodType>();
 
@@ -54,5 +55,13 @@ public class FoodType {
         }
 
         return false;
+    }
+
+    public boolean isAllergen() {
+        return allergen;
+    }
+
+    public void setAllergen(boolean allergen) {
+        this.allergen = allergen;
     }
 }
