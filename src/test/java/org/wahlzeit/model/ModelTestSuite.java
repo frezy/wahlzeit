@@ -17,6 +17,7 @@ import org.junit.runners.Suite;
 
         org.wahlzeit.model.PhotoTestSuite.class,
         org.wahlzeit.model.FoodPhotoTestSuite.class,
+        org.wahlzeit.model.FoodTestSuite.class,
         org.wahlzeit.model.LocationTest.class,
 })
 
