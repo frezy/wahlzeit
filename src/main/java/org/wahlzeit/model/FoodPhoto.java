@@ -7,7 +7,7 @@ import java.util.EnumSet;
 @Entity
 public class FoodPhoto extends Photo {
 
-    private Food food;
+    //private Food food;
 
     public FoodPhoto() {
         super();
@@ -25,13 +25,13 @@ public class FoodPhoto extends Photo {
         this.foodType = foodType;
     }*/
 
-    public Food getFood() {
+    /*public Food getFood() {
         return food;
     }
 
     public void setFood(Food food) {
         this.food = food;
-    }
+    }*/
 
     /**
      * @methodtype boolean-query

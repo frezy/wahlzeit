@@ -2,8 +2,12 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.services.DataObject;
 
-public class Food extends DataObject {
+public class Food {
     protected FoodType type = null;
+
+    public Food() {
+
+    }
 
     public Food(FoodType foodType) {
         type = foodType;

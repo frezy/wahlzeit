@@ -5,7 +5,7 @@ import org.wahlzeit.services.ObjectManager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FoodManager extends ObjectManager {
+public class FoodManager {
     private static final FoodManager instance = new FoodManager();
 
     public static FoodManager getInstance() {
@@ -27,13 +27,14 @@ public class FoodManager extends ObjectManager {
         if(foodTypes.containsKey(foodType)) {
             return foodTypes.get(foodType);
         } else {
-            return foodTypes.put(foodType, new FoodType(foodType));
+            foodTypes.put(foodType, new FoodType(foodType));
+            return foodTypes.get(foodType);
         }
     }
 
     private void assertIsValidTypeName(String typeName) {
         assert typeName != null;
-        assert typeName.isEmpty();
+        assert !typeName.isEmpty();
         //assert foodTypes.containsKey(typeName);
     }
 }

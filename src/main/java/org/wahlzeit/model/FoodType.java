@@ -64,4 +64,9 @@ public class FoodType {
     public void setAllergen(boolean allergen) {
         this.allergen = allergen;
     }
+
+    @Override
+    public String toString() {
+        return type;
+    }
 }
