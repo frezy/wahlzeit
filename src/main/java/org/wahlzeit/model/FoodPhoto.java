@@ -7,8 +7,7 @@ import java.util.EnumSet;
 @Entity
 public class FoodPhoto extends Photo {
 
-    private FoodType foodType;
-    private EnumSet<FoodAllergens> foodAllergens;
+    private Food food;
 
     public FoodPhoto() {
         super();
@@ -18,20 +17,20 @@ public class FoodPhoto extends Photo {
         super(myId);
     }
 
-    public FoodType getFoodType() {
+    /*public FoodType getFoodType() {
         return foodType;
     }
 
     public void setFoodType(FoodType foodType) {
         this.foodType = foodType;
+    }*/
+
+    public Food getFood() {
+        return food;
     }
 
-    public EnumSet<FoodAllergens> getFoodAllergens() {
-        return foodAllergens;
-    }
-
-    public void setFoodAllergens(EnumSet<FoodAllergens> foodAllergens) {
-        this.foodAllergens = foodAllergens;
+    public void setFood(Food food) {
+        this.food = food;
     }
 
     /**

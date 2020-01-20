@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractCoordinate implements Coordinate {
-    protected static Map<Integer, Coordinate> coordinates = new ConcurrentHashMap<>();
+    //protected static Map<Integer, Coordinate> coordinates = new ConcurrentHashMap<>();
 
     /**
      * Converts the actual Coordinate-object to an CartesianCoordinate-object.

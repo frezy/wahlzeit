@@ -2,12 +2,16 @@ package org.wahlzeit.model.coordinate;
 
 import org.wahlzeit.utils.DoubleUtil;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CartesianCoordinate extends AbstractCoordinate {
     private double x;
     private double y;
     private double z;
+
+    private static Map<Integer, CartesianCoordinate> coordinates = new ConcurrentHashMap<>();
 
     //private Map<Integer, CartesianCoordinate> coordinateMap = new ConcurrentHashMap<>();
 
@@ -30,7 +34,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         CartesianCoordinate cartesianCoordinate = (CartesianCoordinate)coordinates.put(hash, new CartesianCoordinate(x, y, z));
         return cartesianCoordinate;*/
-        CartesianCoordinate coordinate = (CartesianCoordinate)coordinates.get(hash);
+        CartesianCoordinate coordinate = coordinates.get(hash);
         if(coordinate == null) {
             coordinate = new CartesianCoordinate(x, y, z);
             coordinates.put(hash, coordinate);

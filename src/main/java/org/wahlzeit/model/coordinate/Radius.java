@@ -8,7 +8,7 @@ public class Radius extends AbstractValidDouble {
         super(value);
     }
 
-    protected void assertValidValue() {
+    protected void assertValidValue() throws IllegalArgumentException {
         DoubleUtil.assertIsFinite(value);
         if (value < 0) {
             throw new IllegalArgumentException("Radius not greater than 0.");

@@ -3,12 +3,16 @@ package org.wahlzeit.model.coordinate;
 import org.wahlzeit.utils.DoubleUtil;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SphericCoordinate extends AbstractCoordinate {
     private double radius;
     private double theta;
     private double phi;
+
+    protected static Map<Integer, SphericCoordinate> coordinates = new ConcurrentHashMap<>();
 
     private SphericCoordinate() {};
 
@@ -31,7 +35,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
         SphericCoordinate sphericCoordinate = (SphericCoordinate) coordinates.put(hash, new SphericCoordinate(radius, theta, phi));
         return sphericCoordinate;*/
-        SphericCoordinate coordinate = (SphericCoordinate)coordinates.get(hash);
+        SphericCoordinate coordinate = coordinates.get(hash);
         if(coordinate == null) {
             coordinate = new SphericCoordinate(radius, theta, phi);
             coordinates.put(hash, coordinate);

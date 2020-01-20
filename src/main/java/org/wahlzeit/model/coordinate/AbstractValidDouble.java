@@ -3,7 +3,7 @@ package org.wahlzeit.model.coordinate;
 public abstract class AbstractValidDouble implements ValidDouble {
     protected double value;
 
-    public AbstractValidDouble(double value) {
+    public AbstractValidDouble(double value) throws IllegalArgumentException {
         this.value = value;
 
         assertValidValue();
