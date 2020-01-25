@@ -28,6 +28,8 @@ public class OfyService {
 		factory().register(Guest.class);
 		factory().register(PhotoCase.class);
 		factory().register(ImageWrapper.class);
+		//factory().register(Food.class);
+		//factory().register(FoodType.class);
 	}
 
 	public static Objectify ofy() {

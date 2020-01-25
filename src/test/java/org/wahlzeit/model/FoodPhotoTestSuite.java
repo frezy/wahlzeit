@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        //org.wahlzeit.model.FoodPhotoTest.class,
+        org.wahlzeit.model.FoodPhotoTest.class,
         org.wahlzeit.model.FoodPhotoFactoryTest.class,
         org.wahlzeit.model.FoodPhotoManagerTest.class
 })

@@ -35,6 +35,5 @@ public class FoodManager {
     private void assertIsValidTypeName(String typeName) {
         assert typeName != null;
         assert !typeName.isEmpty();
-        //assert foodTypes.containsKey(typeName);
     }
 }
