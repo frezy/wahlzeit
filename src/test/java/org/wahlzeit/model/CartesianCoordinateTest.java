@@ -105,4 +105,9 @@ public class CartesianCoordinateTest {
     public void testHashCode() {
         assertEquals(Objects.hash(a.getX(), a.getY(), a.getZ()), a.hashCode());
     }
+
+    @Test
+    public void testSharedCoordinates() {
+        assertEquals(a, b);
+    }
 }
