@@ -7,7 +7,7 @@ import java.util.EnumSet;
 @Entity
 public class FoodPhoto extends Photo {
 
-    //private Food food;
+    //private Food food = null;
 
     public FoodPhoto() {
         super();

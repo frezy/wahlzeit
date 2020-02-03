@@ -28,6 +28,7 @@ public class OfyService {
 		factory().register(Guest.class);
 		factory().register(PhotoCase.class);
 		factory().register(ImageWrapper.class);
+		//OFY error
 		//factory().register(Food.class);
 		//factory().register(FoodType.class);
 	}

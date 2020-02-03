@@ -1,8 +1,14 @@
 package org.wahlzeit.model;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import org.wahlzeit.services.DataObject;
 
-public class Food {
+@Entity
+public class Food extends DataObject {
+    @Id
+    Long idLong;
+
     protected FoodType type = null;
 
     public Food() {

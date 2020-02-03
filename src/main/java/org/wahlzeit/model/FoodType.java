@@ -6,13 +6,20 @@ package org.wahlzeit.model;
     Regular
 }*/
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import javafx.scene.chart.PieChart;
 import org.wahlzeit.services.DataObject;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class FoodType {
+@Entity
+public class FoodType extends DataObject {
+    @Id
+    Long idLong;
+
     private String type;
     private boolean allergen = false;
     protected FoodType superType = null;
