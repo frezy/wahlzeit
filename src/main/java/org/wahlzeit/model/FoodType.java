@@ -8,7 +8,6 @@ package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import javafx.scene.chart.PieChart;
 import org.wahlzeit.services.DataObject;
 
 import java.util.HashSet;
